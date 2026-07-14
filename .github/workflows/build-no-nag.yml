@@ -1,25 +1,24 @@
 name: Build No-Nag RikkaHub
 
 on:
-  workflow_dispatch: # 支持手动点击按钮触发编译
+  workflow_dispatch: # 支持手动点击运行
   schedule:
-    - cron: '0 0 * * 0' # 每周日自动运行一次，自动拉取官网最新代码
+    - cron: '0 0 * * 0' # 每周日自动运行一次同步
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout upstream code
+      - name: Checkout logicflow-GYW repository
         uses: actions/checkout@v4
         with:
-          repository: rikkahub/rikkahub
-          ref: main # 拉取官网最新的 main 分支
+          ref: master # 使用你当前的主分支
 
-      - name: Apply No-Nag Patch (去弹窗修补)
+      - name: Apply No-Nag Patch (替换去广告)
         run: |
           FILE="app/src/main/java/me/rerere/rikkahub/ui/pages/setting/SettingPage.kt"
-          # 用 sed 把弹窗判断条件替换为 if (false)
+          # 用 sed 命令把 SettingPage.kt 中的判断逻辑修改为 if (false)
           sed -i 's/if (settings.launchCount > 100 && (settings.launchCount - settings.sponsorAlertDismissedAt) >= 50)/if (false)/g' $FILE
           echo "Patch successfully applied!"
 
