@@ -90,7 +90,7 @@ fun SettingPage(vm: SettingVM = koinViewModel()) {
     val settings by vm.settings.collectAsStateWithLifecycle()
     val filesManager: FilesManager = koinInject()
 
-    if (settings.launchCount > 100 && (settings.launchCount - settings.sponsorAlertDismissedAt) >= 50) {
+    if (false) {
         AlertDialog(
             onDismissRequest = {
                 vm.updateSettings(settings.copy(sponsorAlertDismissedAt = settings.launchCount))
