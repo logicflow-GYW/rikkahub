@@ -78,18 +78,17 @@ jobs:
 
       - name: Prepare build files
         run: |
-          # 解码base64编码的keystore文件
-          echo "${{ secrets.KEY_BASE64 }}" | base64 -d > app/app.key
+          # 自动解码内嵌的 keystore 证书
+          echo "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" | base64 -d > app/app.key
 
-          # 写入签名配置到local.properties
-          echo "${{ secrets.SIGNING_CONFIG }}" > local.properties
+          # 自动写入签名密码配置
+          echo "signing.storeFile=app.key" > local.properties
+          echo "signing.storePassword=rikkahub123" >> local.properties
+          echo "signing.keyAlias=rikkahub-key" >> local.properties
+          echo "signing.keyPassword=rikkahub123" >> local.properties
 
-          # 写入Google Services配置 (如果未定义则自动生成默认值，防止Gradle编译报错)
-          if [ -z "${{ secrets.GOOGLE_SERVICES_JSON }}" ]; then
-            echo '{"project_info":{"project_number":"1234567890","project_id":"placeholder-project-id","storage_bucket":"placeholder-project-id.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:1234567890:android:abcdef123456","android_client_info":{"package_name":"me.rerere.rikkahub"}},"oauth_client":[],"api_key":[{"current_key":"placeholder_api_key"}],"services":{"appinvite_service":{"status":1}}}],"configuration_version":"1"}' > app/google-services.json
-          else
-            echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > app/google-services.json
-          fi
+          # 自动补全 google-services.json
+          echo '{"project_info":{"project_number":"1234567890","project_id":"placeholder-project-id","storage_bucket":"placeholder-project-id.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:1234567890:android:abcdef123456","android_client_info":{"package_name":"me.rerere.rikkahub"}},"oauth_client":[],"api_key":[{"current_key":"placeholder_api_key"}],"services":{"appinvite_service":{"status":1}}}],"configuration_version":"1"}' > app/google-services.json
 
       - name: Gradle Build
         run: |
