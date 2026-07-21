@@ -123,13 +123,6 @@ fun SettingProviderPage(vm: SettingVM = koinViewModel()) {
                     BackButton()
                 },
                 actions = {
-                    RecommendProviderButton { provider ->
-                        vm.updateSettings(
-                            settings.copy(
-                                providers = listOf(provider.copyProvider(Uuid.random())) + settings.providers
-                            )
-                        )
-                    }
                     ImportProviderButton {
                         vm.updateSettings(
                             settings.copy(
