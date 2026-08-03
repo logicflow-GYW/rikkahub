@@ -16,11 +16,6 @@
 </div>
 
 
-## 🚀 下载
-
-🔗 [前往官网下载](https://rikka-ai.com/download)（推荐）
-🔗 [前往 Google Play 下载](https://play.google.com/store/apps/details?id=me.rerere.rikkahub)
-
 ## ⚠️ Fork 版本说明（本仓库）
 
 本仓库是 **logicflow-GYW 个人维护的 RikkaHub fork**，与官方 RikkaHub 无关联，不提供官方支持，使用风险自负。

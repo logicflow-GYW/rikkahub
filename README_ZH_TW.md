@@ -15,11 +15,6 @@
   <img src="docs/img/desktop.png" alt="Models Picker" width="450" />
 </div>
 
-## 🚀 下載
-
-🔗 [前往官網下載](https://rikka-ai.com/download)（推薦）
-🔗 [前往 Google Play 下載](https://play.google.com/store/apps/details?id=me.rerere.rikkahub)
-
 ## ⚠️ Fork 版本說明（本倉庫）
 
 本倉庫是 **logicflow-GYW 個人維護的 RikkaHub fork**，與官方 RikkaHub 無關聯，不提供官方支援，使用風險自負。

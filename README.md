@@ -35,12 +35,6 @@ This repository is a **personally maintained fork of RikkaHub by logicflow-GYW**
 > [!WARNING]
 > Official notice: There are many forked versions of RikkaHub. Issues with forks are unrelated to RikkaHub, so please use forks with caution to avoid privacy leaks or excessive permission requests.
 
-## 🚀 Download
-
-🔗 [Download from Website](https://rikka-ai.com/download) (Recommended)
-
-🔗 [Download from Google Play](https://play.google.com/store/apps/details?id=me.rerere.rikkahub)
-
 ## ✨ Features
 
 - 🎨 Material You Design and 🌙 Dark mode
