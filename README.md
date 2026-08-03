@@ -18,6 +18,23 @@ Click to join our Discord server 👉 [【RikkaHub】](https://discord.gg/9weBqx
   <img src="docs/img/desktop.png" alt="Models Picker" width="450" />
 </div>
 
+## ⚠️ Fork Notice (This Repository)
+
+This repository is a **personally maintained fork of RikkaHub by logicflow-GYW**. It is not affiliated with the official RikkaHub project and offers no official support. Use at your own risk.
+
+**Differences from the official version:**
+
+- **Removed**: the sponsor nag dialog, the donation page, the documentation/share entries in Settings → About, the recommended-provider button, and the sponsor & donation links in the README
+- **Build**: signing keystore is embedded in the CI workflow, so a signed APK builds with zero configuration; daily scheduled build + manual trigger; publishes a single arm64-v8a APK (same as official)
+
+**Notes:**
+
+- This fork is signed with a different key, so it **cannot be installed over** the official build, and it will not receive official updates
+- This fork does not auto-sync with upstream; features may differ from the official version
+
+> [!WARNING]
+> Official notice: There are many forked versions of RikkaHub. Issues with forks are unrelated to RikkaHub, so please use forks with caution to avoid privacy leaks or excessive permission requests.
+
 ## 🚀 Download
 
 🔗 [Download from Website](https://rikka-ai.com/download) (Recommended)

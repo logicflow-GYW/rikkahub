@@ -20,15 +20,22 @@
 🔗 [前往官網下載](https://rikka-ai.com/download)（推薦）
 🔗 [前往 Google Play 下載](https://play.google.com/store/apps/details?id=me.rerere.rikkahub)
 
+## ⚠️ Fork 版本說明（本倉庫）
+
+本倉庫是 **logicflow-GYW 個人維護的 RikkaHub fork**，與官方 RikkaHub 無關聯，不提供官方支援，使用風險自負。
+
+**與官方版的區別：**
+
+- **移除內容**：啟動贊助彈窗、捐贈頁面、設定-關於中的文件/分享入口、推薦 Provider 按鈕、README 中的贊助商列表與捐贈連結
+- **建置方式**：簽名金鑰內嵌 CI 工作流程，零設定即可產出簽名 APK；每日自動建置 + 手動觸發；發佈 arm64-v8a 單包（與官方一致）
+
+**使用須知：**
+
+- 本 fork 簽名與官方不同，**無法覆蓋安裝**官方版本，也不會收到官方更新
+- 本 fork 不會自動同步官方程式碼，功能與官方可能存在差異
+
 > [!WARNING]
-> RikkaHub 存在許多 fork 版本，fork 版本出現問題與 RikkaHub 無關，請謹慎使用 fork 版本，避免隱私洩露或者過度索要權限問題。
-
-## 💖 贊助商
-
-|                                         贊助商                                         | 介紹                                                                                                                                              |
-|:-----------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------|
-| <img src="docs/sponsors/aihubmix.png" alt="Aihubmix" width="50" /><br /><b>Aihubmix</b> | 感謝 <a href="https://aihubmix.com?aff=pG7r">aihubmix.com</a> 的資金支持。我們推薦使用 aihubmix 作為全球主流模型的一站式服務平台。（OpenAI、Claude、Google Gemini、DeepSeek、Qwen 以及數百種其他模型）。 |
-| <img src="docs/sponsors/suixiang.jpg" alt="隨想AI網關" width="50" /><br /><b>隨想AI網關</b> | 感謝隨想AI網關對本項目的贊助！隨想AI網關 是一家可靠高效的 API 中繼服務提供商，提供 Claude、Codex、Gemini 等的中繼服務。注重隱私的中轉站·無數據倒賣·無模型摻水，隱私，透明，極速售後。新帳戶註冊每日簽到就送 0.5 元測試額度，儲值額度 1:1，無需訂閱，按量付費。多線路冗餘、跨區域容災、自動故障切換，長鏈路 SSE 不中斷。99.9% 可用性，關鍵呼叫從不掉隊。 |
+> 官方提示：RikkaHub 存在許多 fork 版本，fork 版本出現問題與 RikkaHub 無關，請謹慎使用 fork 版本，避免隱私洩露或者過度索要權限問題。
 
 ## ✨ 功能特色
 
@@ -73,11 +80,6 @@
 > 1. 添加新語言，因為添加新語言會增加後續本地化的工作量
 > 2. 添加新功能，這個項目是有態度的
 > 3. AI生成的大規模重構和更改
-
-## 💰 捐贈
-
-* [Patreon](https://patreon.com/rikkahub)
-* [愛發電](https://afdian.com/a/reovo)
 
 ## ⭐ Star History
 
