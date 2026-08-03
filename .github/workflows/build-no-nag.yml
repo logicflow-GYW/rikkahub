@@ -2,6 +2,8 @@ name: Build No-Nag RikkaHub
 
 on:
   workflow_dispatch: # 手动触发
+  schedule:
+    - cron: '0 18 * * *'   # 每天 UTC 18:00（北京时间次日 02:00）自动构建，可自行修改
 
 jobs:
   build:
@@ -60,19 +62,19 @@ jobs:
       - name: Gradle Build
         run: |
           chmod +x gradlew
-          ./gradlew assembleRelease -x :web:buildWebUi
+          ./gradlew assembleRelease
 
-      # 把 APK 直接发布为 Prerelease，用户点链接即可下载单个 apk，无需登录、无需解压
+      # 只发布 arm64-v8a 单包（与官方一致），重命名为易识别文件名
       - name: Publish prerelease
         uses: softprops/action-gh-release@v2
         if: success()
         with:
-          tag_name: nightly            # 固定 tag，覆盖同一个「最新构建」
+          tag_name: nightly            # 固定 tag，每次构建覆盖同一个「最新构建」
           name: Build No-Nag RikkaHub (免配置去弹窗版)
           body: |
-            这是自动编译的去弹窗签名版 RikkaHub APK。
-            直接下载下方的 `RikkaHub-nightly.apk` 安装即可。
+            这是自动编译的去弹窗签名版 RikkaHub APK（每日自动构建 + 手动触发）。
+            直接下载下方的 `RikkaHub-arm64-v8a.apk` 安装即可。
           draft: false
           prerelease: true
           files: |
-            app/build/outputs/apk/release/*.apk
+            app/build/outputs/apk/release/app-arm64-v8a-release.apk
