@@ -81,8 +81,8 @@ import me.rerere.rikkahub.data.repository.ConversationRepository
 import me.rerere.rikkahub.data.repository.FolderRepository
 import me.rerere.rikkahub.data.repository.MemoryRepository
 import me.rerere.rikkahub.data.repository.WorkspaceRepository
-import me.rerere.rikkahub.web.BadRequestException
-import me.rerere.rikkahub.web.NotFoundException
+import me.rerere.rikkahub.exception.BadRequestException
+import me.rerere.rikkahub.exception.NotFoundException
 import me.rerere.rikkahub.utils.applyPlaceholders
 import me.rerere.workspace.WorkspaceShellStatus
 import java.time.Instant
