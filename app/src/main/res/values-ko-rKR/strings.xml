@@ -431,6 +431,9 @@
   <string name="no_text_content_to_copy">복사할 텍스트 콘텐츠가 없습니다</string>
   <string name="notification_channel_chat_completed">채팅 완료</string>
   <string name="notification_channel_chat_live_update">채팅 생성 진행률</string>
+  <string name="notification_channel_chat_generation">채팅 생성 중</string>
+  <string name="chat_generation_ongoing_title">응답 생성 중…</string>
+  <string name="chat_generation_ongoing_content">백그라운드에서 응답 중, 완료될 때까지 앱을 유지합니다</string>
   <string name="notification_channel_web_server">웹 서버</string>
   <string name="notification_live_update_chip_thinking">생각 중</string>
   <string name="notification_live_update_chip_tool">도구</string>

@@ -433,6 +433,9 @@
   <string name="no_text_content_to_copy">暂无可复制的文本内容</string>
   <string name="notification_channel_chat_completed">聊天完成</string>
   <string name="notification_channel_chat_live_update">聊天生成进度</string>
+  <string name="notification_channel_chat_generation">聊天生成进行中</string>
+  <string name="chat_generation_ongoing_title">正在生成回答…</string>
+  <string name="chat_generation_ongoing_content">正在后台回答，应用保持运行直到完成</string>
   <string name="notification_channel_web_server">Web服务器</string>
   <string name="notification_live_update_chip_thinking">思考中</string>
   <string name="notification_live_update_chip_tool">工具</string>

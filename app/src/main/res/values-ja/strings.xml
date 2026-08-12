@@ -431,6 +431,9 @@
   <string name="no_text_content_to_copy">コピーできるテキストコンテンツがありません</string>
   <string name="notification_channel_chat_completed">チャット完了</string>
   <string name="notification_channel_chat_live_update">チャット生成の進行状況</string>
+  <string name="notification_channel_chat_generation">チャット生成中</string>
+  <string name="chat_generation_ongoing_title">回答を生成中…</string>
+  <string name="chat_generation_ongoing_content">バックグラウンドで回答中、完了までアプリを維持します</string>
   <string name="notification_channel_web_server">Webサーバー</string>
   <string name="notification_live_update_chip_thinking">考え中</string>
   <string name="notification_live_update_chip_tool">ツール</string>

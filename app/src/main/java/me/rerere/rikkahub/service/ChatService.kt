@@ -2,6 +2,7 @@ package me.rerere.rikkahub.service
 
 import android.app.Application
 import android.content.Context
+import android.os.SystemClock
 import android.util.Log
 import androidx.core.net.toUri
 import kotlinx.coroutines.CancellationException
@@ -155,6 +156,12 @@ class ChatService(
     // 统一会话管理
     private val sessions = ConcurrentHashMap<Uuid, ConversationSession>()
     private val _sessionsVersion = MutableStateFlow(0L)
+
+    // 流式落库节流：记录每个会话最近一次增量持久化的时间戳（ms）
+    private val streamPersistThrottle = ConcurrentHashMap<Uuid, Long>()
+    private val streamPersistIntervalMillis = 700L
+    // 流式落库在途任务：用于在最终全量落库前 join，避免旧快照晚到覆盖新内容
+    private val inFlightStreamPersists = ConcurrentHashMap<Uuid, Job>()
 
     // 错误状态
     private val _errors = MutableStateFlow<List<ChatError>>(emptyList())
@@ -474,6 +481,10 @@ class ChatService(
             ?: settings.getCurrentAssistant()
         val model = settings.findModelById(assistant.chatModelId ?: settings.chatModelId) ?: return
 
+        // 生成入口统一在此托住进程（sendMessage / regenerate / 工具审批回复等所有路径），
+        // 避免后台流式期间被系统杀进程导致回答尾部丢失。watchdog 模型，重复进入无害。
+        ChatGenerationService.start(context)
+
         val senderName = if (assistant.useAssistantAvatar) {
             assistant.name.ifEmpty { context.getString(R.string.assistant_page_default_assistant) }
         } else {
@@ -578,6 +589,9 @@ class ChatService(
                     }
                 },
             ).onCompletion {
+                // 生成结束，清理流式落库节流状态（正常结束与取消都会触发）
+                streamPersistThrottle.remove(conversationId)
+
                 // 可能被取消了，或者意外结束，兜底更新
                 val updatedConversation = getConversationFlow(conversationId).value.copy(
                     messageNodes = getConversationFlow(conversationId).value.messageNodes.map { node ->
@@ -603,6 +617,11 @@ class ChatService(
                             .updateCurrentMessages(chunk.messages)
                         updateConversation(conversationId, updatedConversation)
 
+                        // 流式期间增量节流落库（只写当前节点，重载轻），
+                        // 保证进程在生成中途/末尾落库前被杀时不整段丢失。
+                        // 末尾 .onSuccess 仍有全量落库兜底。
+                        maybePersistStreamingNode(conversationId, updatedConversation)
+
                         // 通知等边缘副作用由 ChatNotificationManager 消费；
                         // tryEmit 不挂起，事件丢失只影响单次通知更新，不能反压生成链
                         chunk.messages.lastOrNull()?.let { lastMessage ->
@@ -622,6 +641,9 @@ class ChatService(
             Logging.log(TAG, "handleMessageComplete: $it")
             Logging.log(TAG, it.stackTraceToString())
         }.onSuccess {
+            // 等所有在途的流式增量落库提交后再做最终全量落库，保证最终态是最新内容
+            awaitPendingStreamPersist(conversationId)
+
             val finalConversation = getConversationFlow(conversationId).value
             saveConversation(conversationId, finalConversation)
 
@@ -920,6 +942,49 @@ class ChatService(
         val session = getOrCreateSession(conversationId)
         checkFilesDelete(conversation, session.state.value)
         session.state.value = conversation
+    }
+
+    /**
+     * 流式期间增量节流落库：仅持久化当前消息节点（轻量，不重写整会话），
+     * 间隔由 [streamPersistIntervalMillis] 控制。任何时刻进程被杀时，
+     * DB 中已重建到最近一次 flush 的流式内容，避免整段丢失。
+     * 末尾的全量落库（.onSuccess）仍是最终兜底。
+     */
+    private fun maybePersistStreamingNode(
+        conversationId: Uuid,
+        conversation: Conversation,
+    ) {
+        val node = conversation.messageNodes.lastOrNull() ?: return
+        // 只有数据真的在变化时才考虑落库（node 无消息/空回复无事可做）
+        if (node.messages.isEmpty() || node.messages.none { it.parts.isNotEmpty() }) return
+
+        val now = SystemClock.elapsedRealtime()
+        val last = streamPersistThrottle[conversationId]
+        if (last != null && now - last < streamPersistIntervalMillis) return
+        streamPersistThrottle[conversationId] = now
+
+        val job = appScope.launch(Dispatchers.Default) {
+            try {
+                runCatching {
+                    conversationRepo.persistCurrentMessageNode(conversation, node)
+                }.onFailure {
+                    Logging.log(TAG, "maybePersistStreamingNode failed: $it")
+                }
+            } finally {
+                inFlightStreamPersists.remove(conversationId)
+            }
+        }
+        inFlightStreamPersists[conversationId] = job
+    }
+
+    /**
+     * 等待该会话所有在途的流式增量落库完成，之后再做最终全量落库。
+     * 避免旧快照的增量写在新快照的全量写之后才提交，导致节点被回退到更短内容。
+     */
+    private suspend fun awaitPendingStreamPersist(conversationId: Uuid) {
+        inFlightStreamPersists.remove(conversationId)?.let { job ->
+            runCatching { job.join() }
+        }
     }
 
     fun updateConversationState(conversationId: Uuid, update: (Conversation) -> Conversation) {

@@ -305,6 +305,30 @@ class ConversationRepository(
         messageFtsManager.indexConversation(conversation)
     }
 
+    /**
+     * 流式生成期间的轻量增量落库：只持久化当前消息节点（按 id REPLACE），
+     * 不做整会话 delete+reinsert，也不触发 FTS 重索引，适合高频节流调用。
+     *
+     * 目的：进程在生成中途 / `.onSuccess` 前被杀时，DB 里仍能重建出至少到
+     * 最近一次 flush 的流式内容，避免整段未落库的助手回答丢失。
+     * 会话最终态（conversation 行、updateAt、FTS）仍由末尾完整落库保证。
+     */
+    suspend fun persistCurrentMessageNode(conversation: Conversation, node: MessageNode) {
+        val index = conversation.messageNodes.indexOf(node)
+        if (index == -1) return
+        database.withTransaction {
+            messageNodeDAO.insert(
+                MessageNodeEntity(
+                    id = node.id.toString(),
+                    conversationId = conversation.id.toString(),
+                    nodeIndex = index,
+                    messages = JsonInstant.encodeToString(node.messages),
+                    selectIndex = node.selectIndex
+                )
+            )
+        }
+    }
+
     suspend fun deleteConversation(conversation: Conversation) {
         // 获取完整的 Conversation（包含 messageNodes）以正确清理文件
         val fullConversation = if (conversation.messageNodes.isEmpty()) {
