@@ -1253,5 +1253,6 @@
   <string name="setting_update_reminder_pause_description">업데이트 알림을 얼마나 오랫동안 일시 중지할지 선택하세요. 자동으로 다시 시작됩니다.</string>
   <string name="setting_update_reminder_pause_days">%1$d일</string>
   <string name="setting_update_reminder_resume_now">지금 재개</string>
+  <string name="reasoning_max">최대</string>
 </resources>
 
