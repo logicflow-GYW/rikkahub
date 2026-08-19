@@ -670,8 +670,6 @@
   <string name="setting_display_page_show_thinking_content_title">顯示思考內容</string>
   <string name="setting_display_page_show_token_usage_desc">顯示token用量和消息數量</string>
   <string name="setting_display_page_show_token_usage_title">顯示Token和上下文統計</string>
-  <string name="setting_display_page_show_updates_desc">是否顯示應用更新通知</string>
-  <string name="setting_display_page_show_updates_title">顯示更新</string>
   <string name="setting_display_page_show_user_avatar_desc">是否在聊天消息中顯示用戶頭像</string>
   <string name="setting_display_page_show_user_avatar_title">顯示用戶頭像</string>
   <string name="setting_display_page_skip_crop_image_desc">匯入圖片或拍照後跳過裁剪介面</string>
@@ -1034,11 +1032,6 @@
   <string name="translator_page_translate">翻譯</string>
   <string name="tts">語音</string>
   <string name="unpin_chat">取消釘選聊天</string>
-  <string name="update_card_check_failed">檢查更新失敗</string>
-  <string name="update_card_close">關閉</string>
-  <string name="update_card_downloading">正在下載，請查看狀態列以瞭解進度</string>
-  <string name="update_card_new_version_found">發現新版本 %s</string>
-  <string name="update_card_unknown_error">未知錯誤</string>
   <string name="upload_file">上傳檔案</string>
   <string name="use_web_search">網路搜尋</string>
   <string name="user_default_name">用戶</string>
@@ -1247,12 +1240,6 @@
   <string name="search_picker_model_description">模型提供者內建的雲端搜尋</string>
   <string name="search_picker_select_provider">選擇搜尋提供者</string>
   <string name="search_picker_turn_off">關閉搜尋</string>
-  <string name="setting_update_reminder_enabled">更新提醒已啟用</string>
-  <string name="setting_update_reminder_paused_until">已暫停至 %1$s</string>
-  <string name="setting_update_reminder_pause_title">暫停更新提醒</string>
-  <string name="setting_update_reminder_pause_description">選擇暫停更新提醒的時長。它們會自動恢復。</string>
-  <string name="setting_update_reminder_pause_days">%1$d 天</string>
-  <string name="setting_update_reminder_resume_now">立即恢復</string>
   <string name="reasoning_max">最大</string>
 </resources>
 
