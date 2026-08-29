@@ -542,10 +542,6 @@ class ChatService(
             ?: settings.getCurrentAssistant()
         val model = settings.findModelById(assistant.chatModelId ?: settings.chatModelId) ?: return
 
-        // 生成入口统一在此托住进程（sendMessage / regenerate / 工具审批回复等所有路径），
-        // 避免后台流式期间被系统杀进程导致回答尾部丢失。watchdog 模型，重复进入无害。
-        ChatGenerationService.start(context)
-
         val senderName = if (assistant.useAssistantAvatar) {
             assistant.name.ifEmpty { context.getString(R.string.assistant_page_default_assistant) }
         } else {

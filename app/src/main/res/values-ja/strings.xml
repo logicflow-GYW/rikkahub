@@ -431,9 +431,7 @@
   <string name="no_text_content_to_copy">コピーできるテキストコンテンツがありません</string>
   <string name="notification_channel_chat_completed">チャット完了</string>
   <string name="notification_channel_chat_live_update">チャット生成の進行状況</string>
-  <string name="notification_channel_chat_generation">チャット生成中</string>
-  <string name="chat_generation_ongoing_title">回答を生成中…</string>
-  <string name="chat_generation_ongoing_content">バックグラウンドで回答中、完了までアプリを維持します</string><string name="notification_live_update_chip_thinking">考え中</string>
+  <string name="notification_live_update_chip_thinking">考え中</string>
   <string name="notification_live_update_chip_tool">ツール</string>
   <string name="notification_live_update_chip_writing">書き込み中</string>
   <string name="notification_live_update_thinking">考え中…</string>
@@ -1266,4 +1264,3 @@
   <string name="setting_files_page_clean_older_than_days">%1$d日以上前</string>
   <string name="setting_files_page_clean_range_description">完全に削除するファイルを選択してください。この操作は元に戻せません。</string>
 </resources>
-
