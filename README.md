@@ -56,8 +56,8 @@ This repository is a **personally maintained fork of RikkaHub by logicflow-GYW**
 
 ## ✨ Contributing
 
-This project is developed using [Android Studio](https://developer.android.com/studio). PRs are
-welcome!
+This project is developed using [Android Studio](https://developer.android.com/studio). Before
+submitting a pull request, please read the [contribution guidelines](CONTRIBUTING.md).
 
 Technology stack documentation:
 
