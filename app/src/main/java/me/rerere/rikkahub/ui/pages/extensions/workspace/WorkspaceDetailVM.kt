@@ -36,6 +36,13 @@ class WorkspaceDetailVM(
     private val _installError = MutableStateFlow<String?>(null)
     val installError = _installError.asStateFlow()
 
+    private val _settingsError = MutableStateFlow<String?>(null)
+    val settingsError = _settingsError.asStateFlow()
+
+    fun dismissSettingsError() {
+        _settingsError.value = null
+    }
+
     init {
         loadWorkspace()
         refresh()
@@ -145,6 +152,11 @@ class WorkspaceDetailVM(
         }
     }
 
+    suspend fun resolveImageFile(
+        entry: WorkspaceFileEntry,
+        area: WorkspaceStorageArea,
+    ): File = repository.resolveFile(id, area, entry.path)
+
     /**
      * 把当前区域下的文件导出到 cacheDir 的临时文件, 完成后回调 [onReady].
      * 供分享 / 图片预览 / 交给系统应用打开等复用 (它们都需要一个 FileProvider 可访问的真实 File).
@@ -165,6 +177,20 @@ class WorkspaceDetailVM(
                 file
             }.onSuccess(onReady).onFailure { error ->
                 _state.update { it.copy(error = error.message ?: "导出文件失败") }
+            }
+        }
+    }
+
+    fun setShellCompatibilityMode(enabled: Boolean) {
+        viewModelScope.launch {
+            try {
+                repository.setShellCompatibilityMode(id, enabled)
+                val workspace = repository.getById(id)
+                _state.update { it.copy(workspace = workspace) }
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Exception) {
+                _settingsError.value = error.message.orEmpty()
             }
         }
     }
