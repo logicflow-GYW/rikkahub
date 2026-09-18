@@ -205,11 +205,6 @@ class SettingsStore(
                 preferences[MODE_INJECTIONS] = JsonInstant.encodeToString(settings.modeInjections)
                 preferences[LOREBOOKS] = JsonInstant.encodeToString(settings.lorebooks)
                 preferences[QUICK_MESSAGES] = JsonInstant.encodeToString(settings.quickMessages)
-                preferences[WEB_SERVER_ENABLED] = settings.webServerEnabled
-                preferences[WEB_SERVER_PORT] = settings.webServerPort
-                preferences[WEB_SERVER_JWT_ENABLED] = settings.webServerJwtEnabled
-                preferences[WEB_SERVER_ACCESS_PASSWORD] = settings.webServerAccessPassword
-                preferences[WEB_SERVER_LOCALHOST_ONLY] = settings.webServerLocalhostOnly
                 preferences[BACKUP_REMINDER_CONFIG] = JsonInstant.encodeToString(settings.backupReminderConfig)
                 preferences[LAUNCH_COUNT] = settings.launchCount
                 preferences[SPONSOR_ALERT_DISMISSED_AT] = settings.sponsorAlertDismissedAt
