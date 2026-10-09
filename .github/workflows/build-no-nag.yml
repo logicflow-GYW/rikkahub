@@ -21,8 +21,11 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v5
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: 'jetbrains'
+          java-version: '21'
+        env:
+          # jetbrains 安装器查询 GitHub releases，带 token 防限流
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # 构建 web-ui 前端资源
       - name: Set up pnpm
@@ -67,7 +70,8 @@ jobs:
       # 只发布 arm64-v8a 单包（与官方一致），重命名为易识别文件名
       - name: Publish prerelease
         uses: softprops/action-gh-release@v3
-        if: success()
+        # 只在 master 上发布，防止分支测试构建覆盖 nightly 资产
+        if: success() && github.ref == 'refs/heads/master'
         with:
           tag_name: nightly            # 固定 tag，每次构建覆盖同一个「最新构建」
           name: Build No-Nag RikkaHub (免配置去弹窗版)
