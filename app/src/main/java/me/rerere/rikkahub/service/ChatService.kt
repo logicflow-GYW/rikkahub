@@ -578,15 +578,6 @@ class ChatService(
         }
     }
 
-    // ---- 生成回复 ----
-
-    /**
-     * 生成一轮回复：请求模型、执行工具，直到模型不再调用工具、有工具需要审批或达到步数上限。
-     *
-     * 默认接着当前分支的末尾回复；[regenerateNodeId] 不为空时只发送这个节点之前的消息，回复作为它的新分支。
-     * 发送的最后一条是助手消息时从它继续（比如审批之后），回复写回那条消息。
-     * 失败时报告错误、暂停消息队列并返回 [TurnResult.Failed]；取消时直接抛出。
-     */
     /**
      * 流式期间增量节流落库：仅持久化当前消息节点（轻量，不重写整会话），
      * 间隔由 [streamPersistIntervalMillis] 控制。任何时刻进程被杀时，
@@ -630,6 +621,15 @@ class ChatService(
         }
     }
 
+    // ---- 生成回复 ----
+
+    /**
+     * 生成一轮回复：请求模型、执行工具，直到模型不再调用工具、有工具需要审批或达到步数上限。
+     *
+     * 默认接着当前分支的末尾回复；[regenerateNodeId] 不为空时只发送这个节点之前的消息，回复作为它的新分支。
+     * 发送的最后一条是助手消息时从它继续（比如审批之后），回复写回那条消息。
+     * 失败时报告错误、暂停消息队列并返回 [TurnResult.Failed]；取消时直接抛出。
+     */
     private suspend fun runTurn(session: ConversationSession, regenerateNodeId: Uuid? = null): TurnResult {
         val conversationId = session.id
         // 先清理上一轮状态；确定历史后，仅为真正的续写恢复消息 ID。
