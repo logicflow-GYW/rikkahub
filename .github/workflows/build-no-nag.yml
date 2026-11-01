@@ -65,7 +65,19 @@ jobs:
       - name: Gradle Build
         run: |
           chmod +x gradlew
-          ./gradlew assembleRelease
+          # 上游新增 distribution flavor（github / play），每日构建只要 github 渠道；
+          # 写 assembleRelease 会被 Gradle 匹配到两个渠道，白跑一半时间
+          ./gradlew assembleGithubRelease
+
+      # 上游新增 distribution flavor 后产物目录变为 apk/github/release/，
+      # 这里固定搬运成历史上的资产名，避免 nightly 的下载链接/文件名漂移
+      - name: Stage artifact
+        run: |
+          src=$(ls app/build/outputs/apk/github/release/*arm64-v8a*.apk | head -1)
+          echo "found: $src"
+          test -n "$src"
+          mkdir -p dist
+          cp "$src" dist/app-arm64-v8a-release.apk
 
       # 只发布 arm64-v8a 单包（与官方一致），重命名为易识别文件名
       - name: Publish prerelease
@@ -81,4 +93,4 @@ jobs:
           draft: false
           prerelease: true
           files: |
-            app/build/outputs/apk/release/app-arm64-v8a-release.apk
+            dist/app-arm64-v8a-release.apk
