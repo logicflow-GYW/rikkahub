@@ -15,6 +15,7 @@
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+  <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
   <uses-permission
     android:name="android.permission.PACKAGE_USAGE_STATS"
     tools:ignore="ProtectedPermissions" />
@@ -95,6 +96,11 @@
         <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
 
+      <intent-filter>
+        <action android:name="me.rerere.rikkahub.action.MEDIA_CREATION" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+
       <meta-data
         android:name="android.app.shortcuts"
         android:resource="@xml/shortcuts" />
@@ -113,12 +119,16 @@
           android:scheme="rikkahub" />
       </intent-filter>
     </activity>
-    <activity
-      android:name="com.yalantis.ucrop.UCropActivity"
-      android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
     <service
       android:name=".service.ChatGenerationForegroundService"
+      android:exported="false"
+      android:foregroundServiceType="dataSync" />
+    <service
+      android:name=".service.MediaCreationForegroundService"
+      android:exported="false"
+      android:foregroundServiceType="dataSync" />
+    <service
+      android:name=".service.MemoryDreamForegroundService"
       android:exported="false"
       android:foregroundServiceType="dataSync" />
 
@@ -132,7 +142,7 @@
         android:resource="@xml/file_paths" />
     </provider>
     <provider
-      android:name=".data.provider.WorkspaceDocumentsProvider"
+      android:name=".service.WorkspaceDocumentsProvider"
       android:authorities="${applicationId}.documents"
       android:exported="true"
       android:grantUriPermissions="true"
