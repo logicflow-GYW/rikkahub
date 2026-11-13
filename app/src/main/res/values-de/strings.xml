@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="assistant_extensions_page_empty_skills">Keine Skills verfügbar, installiere einen unter Erweiterungen</string>
   <string name="assistant_extensions_page_goto_extensions">Zu den Erweiterungen</string>
