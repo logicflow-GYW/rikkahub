@@ -74,3 +74,14 @@ val PermissionNotification = PermissionInfo(
     usage = { Text(stringResource(R.string.permission_notification_desc)) },
     required = true
 )
+
+// Android 17 (API 37) 起 targetSdk 37 的应用默认不能访问局域网，
+// 连接局域网内的自建服务（OpenAI 兼容网关 / SSH 工作区）时会直接超时，
+// 所以这个权限不再只服务 Web 服务器，保留为通用入口。
+@RequiresApi(37)
+val PermissionLocalNetwork = PermissionInfo(
+    permission = Manifest.permission.ACCESS_LOCAL_NETWORK,
+    displayName = { Text(stringResource(R.string.permission_local_network)) },
+    usage = { Text(stringResource(R.string.permission_local_network_desc)) },
+    required = true
+)
