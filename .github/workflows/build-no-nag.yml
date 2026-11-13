@@ -16,7 +16,8 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
-          submodules: recursive # 拉取子模块
+          # 上游已把 material-color-utilities 从子模块改为内置源码，.gitmodules 已删除，
+          # 这里也不再需要拉子模块（留着会在 checkout 阶段报找不到子模块配置）
 
       - name: Set up JDK
         uses: actions/setup-java@v5
