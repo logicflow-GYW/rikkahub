@@ -323,6 +323,13 @@ dependencies {
     // mcp
     implementation(libs.modelcontextprotocol.kotlin.sdk)
 
+    // jmDNS (mDNS/Bonjour for .local hostname)
+    implementation(libs.jmdns)
+
+    // SLF4J Android binding — routes Ktor/SLF4J logs to logcat
+    implementation(libs.slf4j.api)
+    implementation(libs.slf4j.android)
+
     // sqlite-android (requery SQLite for Android)
     implementation(libs.sqlite.android)
 

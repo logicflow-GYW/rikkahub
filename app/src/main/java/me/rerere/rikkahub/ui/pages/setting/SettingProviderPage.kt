@@ -19,8 +19,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -256,6 +258,62 @@ fun SettingProviderPage(vm: SettingVM = koinViewModel()) {
     }
 }
 
+@Composable
+private fun RecommendProviderButton(
+    addedIds: Set<Uuid>,
+    onAdd: (ProviderSetting) -> Unit
+) {
+    val toaster = LocalToaster.current
+    var showSheet by remember { mutableStateOf(false) }
+    val importSuccessMessage = stringResource(R.string.setting_provider_page_import_success)
+
+    IconButton(
+        onClick = { showSheet = true }
+    ) {
+        Icon(HugeIcons.Sparkles, contentDescription = stringResource(R.string.setting_provider_page_recommend))
+    }
+
+    if (showSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { showSheet = false },
+            sheetState = rememberBottomSheetState(
+                initialValue = SheetValue.Hidden,
+                enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded)
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.setting_provider_page_recommend),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+                Column(verticalArrangement = Arrangement.spacedBy(ListItemDefaults.SegmentedGap)) {
+                    RECOMMENDED_PROVIDERS.fastForEachIndexed { index, provider ->
+                        RecommendProviderItem(
+                            provider = provider,
+                            added = provider.id in addedIds,
+                            shape = cardGroupItemShape(index, RECOMMENDED_PROVIDERS.size),
+                            onAdd = {
+                                onAdd(provider)
+                                toaster.show(
+                                    importSuccessMessage,
+                                    type = ToastType.Success
+                                )
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
 
 @Composable
 private fun RecommendProviderItem(

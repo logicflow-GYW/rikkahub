@@ -39,6 +39,7 @@ import me.rerere.rikkahub.di.dataSourceModule
 import me.rerere.rikkahub.di.repositoryModule
 import me.rerere.rikkahub.di.viewModelModule
 import me.rerere.rikkahub.service.MediaCreationService
+import me.rerere.rikkahub.service.WebServerService
 import me.rerere.rikkahub.utils.CrashHandler
 import me.rerere.rikkahub.utils.DatabaseUtil
 import me.rerere.rikkahub.utils.JsonInstant
@@ -54,6 +55,7 @@ private const val TAG = "RikkaHubApp"
 
 const val CHAT_COMPLETED_NOTIFICATION_CHANNEL_ID = "chat_completed"
 const val CHAT_LIVE_UPDATE_NOTIFICATION_CHANNEL_ID = "chat_live_update"
+const val WEB_SERVER_NOTIFICATION_CHANNEL_ID = "web_server"
 const val MEDIA_CREATION_NOTIFICATION_CHANNEL_ID = "media_creation"
 const val MEMORY_DREAM_NOTIFICATION_CHANNEL_ID = "memory_dream"
 
@@ -106,6 +108,9 @@ class RikkaHubApp : Application() {
 
         // Load models.dev data for model capability matching, then refresh it in background
         updateModelsDev()
+
+        // Fork: web server entry removed from UI — never auto-start it.
+        // startWebServerIfEnabled()
 
         // Resume media generations interrupted by the last process death
         resumeMediaCreations()
@@ -216,6 +221,43 @@ class RikkaHubApp : Application() {
         }
     }
 
+    private fun startWebServerIfEnabled() {
+        get<AppScope>().launch {
+            runCatching {
+                delay(500)
+                val settings = get<SettingsStore>().awaitLoaded()
+                if (settings.webServerEnabled) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                        ContextCompat.checkSelfPermission(
+                            this@RikkaHubApp,
+                            android.Manifest.permission.POST_NOTIFICATIONS
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        Log.w(TAG, "startWebServerIfEnabled: notification permission not granted, skipping")
+                        return@launch
+                    }
+                    if (Build.VERSION.SDK_INT >= 37 &&
+                        !settings.webServerLocalhostOnly &&
+                        ContextCompat.checkSelfPermission(
+                            this@RikkaHubApp,
+                            android.Manifest.permission.ACCESS_LOCAL_NETWORK
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        Log.w(TAG, "startWebServerIfEnabled: local network permission not granted, skipping")
+                        return@launch
+                    }
+                    val intent = Intent(this@RikkaHubApp, WebServerService::class.java).apply {
+                        action = WebServerService.ACTION_START
+                        putExtra(WebServerService.EXTRA_PORT, settings.webServerPort)
+                        putExtra(WebServerService.EXTRA_LOCALHOST_ONLY, settings.webServerLocalhostOnly)
+                    }
+                    startForegroundService(intent)
+                }
+            }.onFailure {
+                Log.e(TAG, "startWebServerIfEnabled failed", it)
+            }
+        }
+    }
 
     private fun createNotificationChannel() {
         val notificationManager = NotificationManagerCompat.from(this)
@@ -239,6 +281,13 @@ class RikkaHubApp : Application() {
             .build()
         notificationManager.createNotificationChannel(chatLiveUpdateChannel)
 
+        val webServerChannel = NotificationChannelCompat
+            .Builder(WEB_SERVER_NOTIFICATION_CHANNEL_ID, NotificationManagerCompat.IMPORTANCE_LOW)
+            .setName(getString(R.string.notification_channel_web_server))
+            .setVibrationEnabled(false)
+            .setShowBadge(false)
+            .build()
+        notificationManager.createNotificationChannel(webServerChannel)
 
         val mediaCreationChannel = NotificationChannelCompat
             .Builder(MEDIA_CREATION_NOTIFICATION_CHANNEL_ID, NotificationManagerCompat.IMPORTANCE_DEFAULT)
@@ -258,6 +307,7 @@ class RikkaHubApp : Application() {
     override fun onTerminate() {
         super.onTerminate()
         get<AppScope>().cancel()
+        stopService(Intent(this, WebServerService::class.java))
     }
 }
 
