@@ -86,6 +86,7 @@ import me.rerere.rikkahub.ui.components.ai.AssistantPicker
 import me.rerere.rikkahub.ui.components.ui.BackupReminderCard
 import me.rerere.rikkahub.ui.components.ui.Greeting
 import me.rerere.rikkahub.ui.components.ui.UIAvatar
+import me.rerere.rikkahub.ui.components.ui.UpdateCard
 import androidx.compose.ui.draw.clip
 import me.rerere.rikkahub.ui.context.LocalToaster
 import me.rerere.rikkahub.ui.context.Navigator
@@ -167,6 +168,21 @@ fun ChatDrawerContent(
     // Menu popup 状态
     var showMenuPopup by remember { mutableStateOf(false) }
 
+    val updateCheckDisabledUntil = settings.displaySetting.updateCheckDisabledUntilEpochMillis
+    var updateChecksEnabled by remember(updateCheckDisabledUntil) {
+        mutableStateOf(updateCheckDisabledUntil <= System.currentTimeMillis())
+    }
+    LaunchedEffect(updateCheckDisabledUntil) {
+        while (true) {
+            val remaining = updateCheckDisabledUntil - System.currentTimeMillis()
+            if (remaining <= 0) {
+                updateChecksEnabled = true
+                break
+            }
+            updateChecksEnabled = false
+            delay(minOf(remaining, 60 * 60 * 1_000L))
+        }
+    }
 
     // 矮屏（如手表、横屏手机）上顶部固定会把会话列表挤没，改为跟随列表一起滚动
     val windowHeight = LocalWindowInfo.current.containerDpSize.height

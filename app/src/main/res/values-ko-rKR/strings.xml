@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="about_page_github">Github</string>
   <string name="about_page_license">라이선스</string>
@@ -417,6 +417,7 @@
   <string name="no_text_content_to_copy">복사할 텍스트 콘텐츠가 없습니다</string>
   <string name="notification_channel_chat_completed">채팅 완료</string>
   <string name="notification_channel_chat_live_update">채팅 생성 진행률</string>
+  <string name="notification_channel_web_server">웹 서버</string>
   <string name="notification_live_update_chip_thinking">생각 중</string>
   <string name="notification_live_update_chip_tool">도구</string>
   <string name="notification_live_update_chip_writing">작성 중</string>
@@ -424,6 +425,9 @@
   <string name="notification_live_update_title">응답 생성 중…</string>
   <string name="notification_live_update_tool">도구 실행 중: %s</string>
   <string name="notification_live_update_writing">응답 작성 중...</string>
+  <string name="notification_web_server_running">웹 서버 실행 중</string>
+  <string name="notification_web_server_starting">시작 중...</string>
+  <string name="notification_web_server_stop">중지</string>
   <string name="permission_camera">카메라</string>
   <string name="permission_camera_desc">사진을 찍기 위해 카메라 권한이 필요합니다</string>
   <string name="permission_desc_goto_setting">일부 권한이 영구적으로 거부되었습니다. 앱 설정에서 직접 활성화해 주세요:</string>
@@ -431,7 +435,7 @@
   <string name="permission_diaog_title">권한 요청</string>
   <string name="permission_go_to_settings">앱 설정으로 이동</string>
   <string name="permission_local_network">로컬 네트워크</string>
-  <string name="permission_local_network_desc">로컬 네트워크의 자체 호스팅 서비스에 연결하려면 필요합니다</string>
+  <string name="permission_local_network_desc">로컬 네트워크의 자체 호스팅 서비스에 연결하거나 다른 기기에서 Web 서버에 접근하려면 필요합니다</string>
   <string name="permission_microphone">마이크</string>
   <string name="permission_microphone_desc">음성 인식을 위해 마이크 권한이 필요합니다</string>
   <string name="permission_notification">알림</string>
@@ -658,6 +662,8 @@
   <string name="setting_display_page_show_thinking_content_title">생각 내용 표시</string>
   <string name="setting_display_page_show_token_usage_desc">토큰 사용량과 메시지 수를 표시합니다</string>
   <string name="setting_display_page_show_token_usage_title">토큰 및 컨텍스트 통계 표시</string>
+  <string name="setting_display_page_show_updates_desc">앱 업데이트 알림을 표시할지 여부</string>
+  <string name="setting_display_page_show_updates_title">업데이트 표시</string>
   <string name="setting_display_page_show_user_avatar_desc">채팅 메시지에 사용자 아바타를 표시할지 여부</string>
   <string name="setting_display_page_show_user_avatar_title">사용자 아바타 표시</string>
   <string name="setting_display_page_skip_crop_image_desc">이미지를 가져오거나 사진을 찍은 후 자르기 화면 건너뛰기</string>
@@ -776,6 +782,7 @@
   <string name="setting_page_mcp_desc">MCP 서버 구성</string>
   <string name="setting_page_message_display_settings">메시지 표시</string>
   <string name="setting_page_model_and_services">모델 및 서비스</string>
+  <string name="setting_page_no_share_app">공유 앱을 찾을 수 없습니다</string>
   <string name="setting_page_providers">제공업체</string>
   <string name="setting_page_providers_desc">AI 제공업체 구성</string>
   <string name="setting_page_request_logs">요청 로그</string>
@@ -791,6 +798,13 @@
   <string name="setting_page_search_test_query_hint">테스트 쿼리 입력…</string>
   <string name="setting_page_search_test_run">테스트 실행</string>
   <string name="setting_page_search_title">검색 서비스</string>
+  <string name="setting_page_share">공유</string>
+  <string name="setting_page_share_desc">앱을 친구들과 공유하기</string>
+  <string name="setting_page_share_text">RikkaHub - 오픈소스 Android AI 어시스턴트\n\n웹사이트: https://rikka-ai.com/</string>
+  <string name="setting_page_sponsor_alert_confirm">기부하기</string>
+  <string name="setting_page_sponsor_alert_desc">앱을 100번 이상 실행하셨네요! 만족스럽게 사용하고 계시다면 개발자를 후원해 주세요.</string>
+  <string name="setting_page_sponsor_alert_dismiss">나중에</string>
+  <string name="setting_page_sponsor_alert_title">개발자 지원하기</string>
   <string name="setting_page_theme_setting">테마</string>
   <string name="setting_page_theme_setting_desc">앱 색상 구성 사용자 지정</string>
   <string name="setting_theme_page_preset_themes">프리셋 테마</string>
@@ -809,6 +823,26 @@
   <string name="setting_page_tts_service">음성 서비스</string>
   <string name="setting_page_tts_service_desc">텍스트-음성 및 음성 인식 제공업체 구성</string>
   <string name="setting_page_tts_settings">TTS 설정</string>
+  <string name="setting_page_web_server">웹 서버</string>
+  <string name="setting_page_web_server_address_note">주소 메모</string>
+  <string name="setting_page_web_server_address_note_desc">LAN 주소: 기기의 WiFi IP를 사용하며, 같은 네트워크에 연결된 다른 기기에서 접근할 수 있습니다. 모바일 데이터에서는 사용할 수 없습니다.
+로컬 주소: localhost를 사용하며, 이 기기에서만 접근할 수 있습니다.
+mDNS 주소: .local 호스트네임을 사용하며, IP를 몰라도 같은 네트워크의 다른 기기에서 이름으로 접근할 수 있습니다.</string>
+  <string name="setting_page_web_server_desc">웹을 통해 RikkaHub에 접근할 수 있도록 허용</string>
+  <string name="setting_page_web_server_error">오류</string>
+  <string name="setting_page_web_server_jwt_enable">인증 활성화</string>
+  <string name="setting_page_web_server_jwt_enable_desc">웹 인터페이스에 접근할 때 비밀번호 인증이 필요합니다</string>
+  <string name="setting_page_web_server_lan_address">LAN 주소</string>
+  <string name="setting_page_web_server_local_address">로컬 주소</string>
+  <string name="setting_page_web_server_localhost_only">localhost만</string>
+  <string name="setting_page_web_server_localhost_only_desc">localhost(127.0.0.1)에서만 수신, LAN 및 mDNS 접근 비활성화</string>
+  <string name="setting_page_web_server_mdns_address">mDNS 주소</string>
+  <string name="setting_page_web_server_password">접속 비밀번호</string>
+  <string name="setting_page_web_server_password_desc">웹 인터페이스 접근에 필요한 비밀번호</string>
+  <string name="setting_page_web_server_port">포트</string>
+  <string name="setting_page_web_server_port_desc">웹 서버 수신 포트(1024-65535)</string>
+  <string name="setting_page_web_server_start">시작</string>
+  <string name="setting_page_web_server_stop">중지</string>
   <string name="setting_provider_page_abilities">기능</string>
   <string name="setting_provider_page_add">추가</string>
   <string name="setting_provider_page_add_model">모델 추가</string>
@@ -1018,6 +1052,11 @@
   <string name="translator_page_translate">번역</string>
   <string name="tts">TTS</string>
   <string name="unpin_chat">채팅 고정 해제</string>
+  <string name="update_card_check_failed">업데이트 확인 실패</string>
+  <string name="update_card_close">닫기</string>
+  <string name="update_card_downloading">다운로드 중입니다. 진행 상황은 상태 표시줄을 확인하세요.</string>
+  <string name="update_card_new_version_found">새 버전 발견 %s</string>
+  <string name="update_card_unknown_error">알 수 없는 오류</string>
   <string name="upload_file">파일 업로드</string>
   <string name="use_web_search">웹 검색 사용</string>
   <string name="user_default_name">사용자</string>
@@ -1223,6 +1262,12 @@
   <string name="search_picker_model_description">모델 제공자에 내장된 클라우드 검색</string>
   <string name="search_picker_select_provider">검색 제공자 선택</string>
   <string name="search_picker_turn_off">검색 끄기</string>
+  <string name="setting_update_reminder_enabled">업데이트 알림이 사용 설정되어 있습니다.</string>
+  <string name="setting_update_reminder_paused_until">%1$s까지 일시 중지됨</string>
+  <string name="setting_update_reminder_pause_title">업데이트 알림 일시중지</string>
+  <string name="setting_update_reminder_pause_description">업데이트 알림을 얼마나 오랫동안 일시 중지할지 선택하세요. 자동으로 다시 시작됩니다.</string>
+  <string name="setting_update_reminder_pause_days">%1$d일</string>
+  <string name="setting_update_reminder_resume_now">지금 재개</string>
   <string name="reasoning_max">최대</string>
   <string name="backup_page_import_overwrite_confirm">백업을 가져오면 앱 데이터가 덮어써집니다. 계속하시겠습니까?</string>
   <string name="setting_page_preferences_network">네트워크</string>

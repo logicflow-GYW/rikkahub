@@ -119,6 +119,7 @@ import me.rerere.rikkahub.ui.pages.setting.SettingPreferencesGeneralPage
 import me.rerere.rikkahub.ui.pages.setting.SettingPreferencesNetworkPage
 import me.rerere.rikkahub.ui.pages.setting.SettingPreferencesUIPage
 import me.rerere.rikkahub.ui.pages.setting.SettingThemePage
+import me.rerere.rikkahub.ui.pages.setting.SettingDonatePage
 import me.rerere.rikkahub.ui.pages.setting.SettingFilesPage
 import me.rerere.rikkahub.ui.pages.setting.SettingMcpDetailPage
 import me.rerere.rikkahub.ui.pages.setting.SettingMcpPage
@@ -131,6 +132,7 @@ import me.rerere.rikkahub.ui.pages.setting.SettingSearchPage
 import me.rerere.rikkahub.ui.pages.setting.SettingMediaPage
 import me.rerere.rikkahub.ui.pages.setting.SettingMediaProviderDetailPage
 import me.rerere.rikkahub.ui.pages.setting.SettingSpeechPage
+import me.rerere.rikkahub.ui.pages.setting.SettingWebPage
 import me.rerere.rikkahub.ui.pages.share.handler.ShareHandlerPage
 import me.rerere.rikkahub.ui.pages.stats.StatsPage
 import me.rerere.rikkahub.ui.pages.translator.TranslatorPage
@@ -523,11 +525,17 @@ class RouteActivity : ComponentActivity() {
                                 SettingMcpDetailPage(id = Uuid.parse(key.serverId))
                             }
 
+                            entry<Screen.SettingDonate> {
+                                SettingDonatePage()
+                            }
 
                             entry<Screen.SettingFiles> {
                                 SettingFilesPage()
                             }
 
+                            entry<Screen.SettingWeb> {
+                                SettingWebPage()
+                            }
 
                             entry<Screen.Debug> {
                                 DebugPage()
@@ -767,7 +775,13 @@ sealed interface Screen : NavKey {
     data class SettingMcpDetail(val serverId: String) : Screen
 
     @Serializable
+    data object SettingDonate : Screen
+
+    @Serializable
     data object SettingFiles : Screen
+
+    @Serializable
+    data object SettingWeb : Screen
 
     @Serializable
     data object Debug : Screen
